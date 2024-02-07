@@ -7,6 +7,15 @@ library(rio)
 library(quantmod)
 
 
+# Lista de pacotes
+# packages <- c("rbcb", "tidyverse", "timetk", "PerformanceAnalytics", "gtrendsR", "rio", "quantmod")
+
+# # Instala pacotes que ainda não foram instalados
+# new_packages <- packages[!(packages %in% installed.packages()[, "Package"])]
+# if (length(new_packages)) install.packages(new_packages)
+
+# # Carrega os pacotes
+# lapply(packages, require, character.only = TRUE)
 
 # taxa selic 2010-2022 ----------------------------------------------------
 
