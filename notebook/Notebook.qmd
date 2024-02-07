@@ -1,0 +1,14 @@
+---
+title: "Notebook"
+---
+
+
+```{r}
+source("/home/nextmarte/projects/dissertacaoMACR/scripts/graficos-macroeconomicos_rev.R")
+```
+
+
+```{r}
+FII_trend_ggplot
+
+```
