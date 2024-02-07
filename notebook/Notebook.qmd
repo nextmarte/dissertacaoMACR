@@ -3,12 +3,7 @@ title: "Notebook"
 ---
 
 
-```{r}
-source("/home/nextmarte/projects/dissertacaoMACR/scripts/graficos-macroeconomicos_rev.R")
-```
+## Premissas
 
-
-```{r}
-FII_trend_ggplot
-
-```
+- Investidores em fundos de investimento entre 2017 e 2023
+- 
