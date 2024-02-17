@@ -1,4 +1,4 @@
-# This script is used to download and process financial data from the CVM website.
+# This script is used to download and process financial fii data from the CVM website.
 
 # Load necessary libraries
 # tidyverse: A collection of R packages designed for data science.
