@@ -105,15 +105,16 @@ complemento_data$Year <- year(as.Date(complemento_data$Data_Referencia))
 # Group and summarize the data
 summary_data <- complemento_data %>%
     group_by(Year) %>%
-    summarise(Total_Numero_Cotistas = sum(Total_Numero_Cotistas, na.rm = TRUE))
+    summarise(Numero_Cotistas_Pessoa_Fisica = sum(Numero_Cotistas_Pessoa_Fisica, na.rm = TRUE)) %>%
+    mutate(Numero_Cotistas_Pessoa_Fisica = cumsum(Numero_Cotistas_Pessoa_Fisica) / 1e3)
 
 # Print the summary data
 print(summary_data)
 
 
-shareholders<-ggplot(summary_data, aes(x = Year, y = Total_Numero_Cotistas)) +
+shareholders<-ggplot(summary_data, aes(x = Year, y = Numero_Cotistas_Pessoa_Fisica)) +
     geom_bar(stat = "identity", fill = "steelblue", color = "black") +
-    geom_text(aes(label = format(Total_Numero_Cotistas, big.mark = ",")), vjust = -0.3, size = 3) +
+    geom_text(aes(label = format(Numero_Cotistas_Pessoa_Fisica, big.mark = ",")), vjust = -0.3, size = 3) +
     labs(x = "Year", 
        y = "Total Number of Shareholders", 
        title = "Total Number of Shareholders Over the Years") +

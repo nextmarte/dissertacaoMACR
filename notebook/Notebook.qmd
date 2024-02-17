@@ -8,18 +8,16 @@ title: "Notebook"
 #| include: false
 #| cache: true
 
-# Get the current Git repository directory
-repo_dir <- git2r::repository(".")
-
-# Get the working directory
-working_dir <- git2r::workdir(repo_dir)
-
-# Set the working directory
-setwd(working_dir)
-
 library(tidyverse)
 
-source("scripts/FII-CVM-Data.R")
+# seta o diretório de trabalho para o diretório do projeto git
+setwd(git2r::workdir(git2r::repository(".")))
+
+# Get the list of all .R files in the scripts directory
+script_files <- list.files(path = "scripts", pattern = "\\.R$", full.names = TRUE)
+
+# Use purrr's walk function to source each script file
+walk(script_files, source)
 ```
 
 ```{r}

@@ -1,4 +1,3 @@
-library(rbcb)
 library(tidyverse)
 library(timetk)
 library(PerformanceAnalytics)
@@ -7,7 +6,7 @@ library(rio)
 library(quantmod)
 library(gganimate)
 
-
+setwd(git2r::workdir(git2r::repository(".")))
 
 # taxa selic 2010-2022 ----------------------------------------------------
 
@@ -28,7 +27,7 @@ anual_selic <- selic %>%
 
 Grafico_selic_anual <- ggplot(anual_selic) +
   aes(x = Data, y = SELIC) +
-  geom_line(colour = "gray", se=FALSE, size = 1) +
+  geom_line(colour = "gray", size = 1) +
   labs(
     y = "SELIC % a.a",
     title = "Serie anual da taxa SELIC 2013-2023") +
@@ -53,8 +52,7 @@ investidores_custodia <-  ggplot(investors, aes(x = Ano, y = Investidores)) +
     ggeasy::easy_adjust_legend(to="center")+
     ggeasy::easy_center_title()+
     xlim(2012, 2023)
-  
-
+  investidores_custodia
 
 # Trends busca por FII no youtube -----------------------------------------
 
