@@ -2,6 +2,29 @@
 title: "Notebook"
 ---
 
+```{r}
+#| echo: false
+#| message: false
+#| include: false
+#| cache: true
+
+# Get the current Git repository directory
+repo_dir <- git2r::repository(".")
+
+# Get the working directory
+working_dir <- git2r::workdir(repo_dir)
+
+# Set the working directory
+setwd(working_dir)
+
+library(tidyverse)
+
+source("scripts/FII-CVM-Data.R")
+```
+
+```{r}
+shareholders
+```
 
 ## Premissas
 
