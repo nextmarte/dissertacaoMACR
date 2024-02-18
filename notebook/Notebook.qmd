@@ -20,10 +20,42 @@ script_files <- list.files(path = "scripts", pattern = "\\.R$", full.names = TRU
 walk(script_files, source)
 ```
 
+## Total de investidores em fundos de investimento imobiliário dentro e fora da B3
 ```{r}
-shareholders
+# Group and summarize the data
+summary_data <- complemento_data %>%
+    group_by(Year) %>%
+    summarise(Numero_Cotistas_Pessoa_Fisica = sum(Numero_Cotistas_Pessoa_Fisica, na.rm = TRUE)) %>%
+    mutate(Numero_Cotistas_Pessoa_Fisica = cumsum(Numero_Cotistas_Pessoa_Fisica) / 1e3)
+
+# Print the summary data
+print(summary_data)
+
+
+shareholders<-ggplot(summary_data, aes(x = Year, y = Numero_Cotistas_Pessoa_Fisica)) +
+    geom_bar(stat = "identity", fill = "steelblue", color = "black") +
+    geom_text(aes(label = format(Numero_Cotistas_Pessoa_Fisica, big.mark = ",")), vjust = -0.3, size = 3) +
+    labs(x = "Year", 
+       y = "Total Number of Shareholders", 
+       title = "Total Number of Shareholders Over the Years") +
+    theme_minimal() +
+    theme(text = element_text(size = 12),
+        plot.title = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 45, hjust = 1)) +
+    scale_y_continuous(labels = scales::comma)
 ```
 
 ## Premissas
 
-- Investidores em fundos de investimento entre 2017 e 2023
+- Investidores em fundos de investimento entre 2016 e 2023
+Eu preciso:
+Fundos listados na B3
+Usar apenas fundos de tijolo: Híbridos, Lages corporativas, Residencial, Shoppings e Logística
+Usar apenas fundos abertos para investidores em geral
+
+
+```{r}
+data_geral_fii  
+
+```
+

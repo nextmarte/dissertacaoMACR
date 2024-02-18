@@ -90,36 +90,15 @@ data_list <- map(data_list, function(data) {
 # Unify the "complemento" table data
 # This step concatenates all the "complemento" data into a single data frame.
 complemento_data <- map(data_list, "complemento") %>% bind_rows()
+data_geral <- map(data_list, "geral") %>% bind_rows()
+data_ativo_passivo <- map(data_list, "ativo_passivo") %>% bind_rows()
+
+
 
 # Return the data frames instead of assigning them to the global environment
 # The script returns a list containing the restructured data_list and the unified complemento_data.
 list(data_list = data_list, complemento_data = complemento_data)
 
-# Load the necessary libraries
-library(dplyr)
-library(lubridate)
-
 # Extract the year from the date
 complemento_data$Year <- year(as.Date(complemento_data$Data_Referencia))
 
-# Group and summarize the data
-summary_data <- complemento_data %>%
-    group_by(Year) %>%
-    summarise(Numero_Cotistas_Pessoa_Fisica = sum(Numero_Cotistas_Pessoa_Fisica, na.rm = TRUE)) %>%
-    mutate(Numero_Cotistas_Pessoa_Fisica = cumsum(Numero_Cotistas_Pessoa_Fisica) / 1e3)
-
-# Print the summary data
-print(summary_data)
-
-
-shareholders<-ggplot(summary_data, aes(x = Year, y = Numero_Cotistas_Pessoa_Fisica)) +
-    geom_bar(stat = "identity", fill = "steelblue", color = "black") +
-    geom_text(aes(label = format(Numero_Cotistas_Pessoa_Fisica, big.mark = ",")), vjust = -0.3, size = 3) +
-    labs(x = "Year", 
-       y = "Total Number of Shareholders", 
-       title = "Total Number of Shareholders Over the Years") +
-    theme_minimal() +
-    theme(text = element_text(size = 12),
-        plot.title = element_text(hjust = 0.5),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
-    scale_y_continuous(labels = scales::comma)

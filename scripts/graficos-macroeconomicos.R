@@ -122,6 +122,6 @@ grafico_comparativo <- ggplot() +
   ggeasy::easy_center_title() +
   theme(legend.position = "bottom")
 
-grafico_comparativo
+grafico_comparativo 
 
 
