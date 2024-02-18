@@ -99,6 +99,6 @@ data_ativo_passivo <- map(data_list, "ativo_passivo") %>% bind_rows()
 # The script returns a list containing the restructured data_list and the unified complemento_data.
 list(data_list = data_list, complemento_data = complemento_data)
 
-# Extract the year from the date
+# Extract the year from the dates
 complemento_data$Year <- year(as.Date(complemento_data$Data_Referencia))
 
