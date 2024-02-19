@@ -103,3 +103,5 @@ list(data_list = data_list, complemento_data = complemento_data)
 
 # Extract the year from the dates
 complemento_data$Year <- year(as.Date(complemento_data$Data_Referencia))
+
+asefm,
