@@ -168,12 +168,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data_geral</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># salva o arquivo filtrado em um arquivo csv</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># write_csv(data_geral_filtrado, "dados/data_geral_filtrado.csv")</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>data_geral_filtrado_b3 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># salva o arquivo filtrado em um arquivo csv</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># write_csv(data_geral_filtrado, "dados/data_geral_filtrado.csv")</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>data_geral_filtrado_b3 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 19,188
 Columns: 36
@@ -216,8 +215,8 @@ $ Email                         &lt;chr&gt; "fundosimobiliarios@riobravo.com.br"
 </div>
 </div>
 <p>Filtrando os fundos de investimento imobiliário listados na B3 (não rodar)</p>
-<p>Foram encontrados 1092 fundos de investimento imobiliário na base de dados da CVM.</p>
-<p>Já na base de dados da B3, temos 430 fundos de investimento imobiliário listados.</p>
+<p>Foram encontrados 1092 fundos de investimento imobiliário na base de dados da CVM. Nessa base de dados, existem infamações sobre os fundos de investimento imobiliário entre 2016 e 2023. A B3 disponibiliza em sua página uma lista de fundos de investimento imobiliário listados, a partir dessa lista foi possível filtrar os fundos de investimento imobiliário listados na B3 dentro da base de dados da CVM através do código ISIN. Assim, na base de dados da B3, temos 430 fundos de investimento imobiliário listados.</p>
+<p>A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3</p>
 </section>
 
 </main>

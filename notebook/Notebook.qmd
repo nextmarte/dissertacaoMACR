@@ -62,6 +62,8 @@ Usar apenas fundos abertos para investidores em geral
 
 ```{r}
 
+setwd(git2r::workdir(git2r::repository(".")))
+
 fundosListado <- read.csv2("dados/fundosListados.csv", sep = ";", fileEncoding = "UTF-8")
 data_geral_filtrado_b3 <- read.csv2("dados/data_geral_filtrado_b3.csv", sep = ",", fileEncoding = "UTF-8")
 # Contando os fundos unicos na base de dados da CVM
@@ -95,11 +97,6 @@ Foram encontrados `r Fundos_cvm_contagem` fundos de investimento imobiliário na
 
 A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3
 
-```{r}
-#| echo: false
-
-
-```
 
 
  
