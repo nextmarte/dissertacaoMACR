@@ -4,6 +4,8 @@
 # tidyverse: A collection of R packages designed for data science.
 library(tidyverse)
 
+setwd(git2r::workdir(git2r::repository(".")))
+
 # Function to download and read data
 # This function takes a year as an argument, constructs a URL to download a zip file containing financial data for that year,
 # downloads the file, reads the data from three CSV files contained in the zip file into data frames,
@@ -101,5 +103,3 @@ list(data_list = data_list, complemento_data = complemento_data)
 
 # Extract the year from the dates
 complemento_data$Year <- year(as.Date(complemento_data$Data_Referencia))
-
-asefm,

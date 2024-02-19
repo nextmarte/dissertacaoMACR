@@ -96,21 +96,128 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="total-de-investidores-em-fundos-de-investimento-imobiliário-dentro-e-fora-da-b3" class="level2">
+<h2 class="anchored" data-anchor-id="total-de-investidores-em-fundos-de-investimento-imobiliário-dentro-e-fora-da-b3">Total de investidores em fundos de investimento imobiliário dentro e fora da B3</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>shareholders</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="Notebook_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group and summarize the data</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>summary_data <span class="ot">&lt;-</span> complemento_data <span class="sc">%&gt;%</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">Numero_Cotistas_Pessoa_Fisica =</span> <span class="fu">sum</span>(Numero_Cotistas_Pessoa_Fisica, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Numero_Cotistas_Pessoa_Fisica =</span> <span class="fu">cumsum</span>(Numero_Cotistas_Pessoa_Fisica) <span class="sc">/</span> <span class="fl">1e3</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the summary data</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(summary_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+   Year Numero_Cotistas_Pessoa_Fisica
+  &lt;dbl&gt;                         &lt;dbl&gt;
+1  2016                          108.
+2  2017                         2200.
+3  2018                         5675.
+4  2019                        17065.
+5  2020                        44835.
+6  2021                        91152.
+7  2022                       155385.
+8  2023                       244950.
+9  2024                       252285.</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>shareholders <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(summary_data, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Numero_Cotistas_Pessoa_Fisica)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">format</span>(Numero_Cotistas_Pessoa_Fisica, <span class="at">big.mark =</span> <span class="st">","</span>)), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Total Number of Shareholders"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">title =</span> <span class="st">"Total Number of Shareholders Over the Years"</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">12</span>),</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="premissas" class="level2">
 <h2 class="anchored" data-anchor-id="premissas">Premissas</h2>
 <ul>
-<li>Investidores em fundos de investimento entre 2017 e 2023</li>
+<li>Investidores em fundos de investimento entre 2016 e 2023 Eu preciso: Fundos listados na B3 Usar apenas fundos de tijolo: Híbridos, Lages corporativas, Residencial, Shoppings e Logística Usar apenas fundos abertos para investidores em geral</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(git2r<span class="sc">::</span><span class="fu">workdir</span>(git2r<span class="sc">::</span><span class="fu">repository</span>(<span class="st">"."</span>)))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>fundosListado <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"dados/fundosListados.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>, <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>data_geral_filtrado_b3 <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"dados/data_geral_filtrado_b3.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Contando os fundos unicos na base de dados da CVM</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>Fundos_cvm_contagem <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(data_geral<span class="sc">$</span>CNPJ_Fundo)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>codigos_filtro <span class="ot">&lt;-</span> <span class="fu">n_distinct</span>(data_geral_filtrado_b3<span class="sc">$</span>Codigo_ISIN)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter data_geral</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># salva o arquivo filtrado em um arquivo csv</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># write_csv(data_geral_filtrado, "dados/data_geral_filtrado.csv")</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>data_geral_filtrado_b3 <span class="sc">%&gt;%</span> <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 19,188
+Columns: 36
+$ CNPJ_Fundo                    &lt;chr&gt; "00.332.266/0001-31", "00.332.266/0001-3…
+$ Data_Referencia               &lt;chr&gt; "2016-11-01", "2016-12-01", "2016-10-01"…
+$ Versao                        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1…
+$ Data_Entrega                  &lt;chr&gt; "2016-12-15", "2017-01-12", "2016-11-14"…
+$ Nome_Fundo                    &lt;chr&gt; "FUNDO DE INVESTIMENTO IMOBILIÁRIO VIA P…
+$ Data_Funcionamento            &lt;chr&gt; "1994-11-24", "1994-11-24", "1995-03-14"…
+$ Publico_Alvo                  &lt;chr&gt; "INVESTIDORES EM GERAL", "INVESTIDORES E…
+$ Codigo_ISIN                   &lt;chr&gt; "BRFVPQCTF015", "BRFVPQCTF015", "BRPABYC…
+$ Quantidade_Cotas_Emitidas     &lt;chr&gt; "2584398", "2584398", "758400", "758400"…
+$ Fundo_Exclusivo               &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", …
+$ Cotistas_Vinculo_Familiar     &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", …
+$ Mandato                       &lt;chr&gt; "Renda", "Renda", "Desenvolvimento para …
+$ Segmento_Atuacao              &lt;chr&gt; "Shoppings", "Shoppings", "Híbrido", "Hí…
+$ Tipo_Gestao                   &lt;chr&gt; "Passiva", "Passiva", "Passiva", "Passiv…
+$ Prazo_Duracao                 &lt;chr&gt; "Indeterminado", "Indeterminado", "Indet…
+$ Data_Prazo_Duracao            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ Encerramento_Exercicio_Social &lt;chr&gt; "31/12", "31/12", "31/12", "31/12", "31/…
+$ Mercado_Negociacao_Bolsa      &lt;chr&gt; "S", "S", "S", "S", "S", "S", "S", "S", …
+$ Mercado_Negociacao_MBO        &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", …
+$ Mercado_Negociacao_MB         &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", …
+$ Entidade_Administradora_BVMF  &lt;chr&gt; "S", "S", "S", "S", "S", "S", "S", "S", …
+$ Entidade_Administradora_CETIP &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", …
+$ Nome_Administrador            &lt;chr&gt; "RIO BRAVO INVESTIMENTOS S/A DTVM", "RIO…
+$ CNPJ_Administrador            &lt;dbl&gt; 7.260003e+13, 7.260003e+13, 3.392311e+13…
+$ Logradouro                    &lt;chr&gt; "AV. CHEDID JAFET", "AV. CHEDID JAFET", …
+$ Numero                        &lt;chr&gt; "222", "222", "116", "116", "116", "222"…
+$ Complemento                   &lt;chr&gt; "BLOCO B - 3ª ANDAR", "BLOCO B - 3ª ANDA…
+$ Bairro                        &lt;chr&gt; "VILA OLÍMPIA", "VILA OLÍMPIA", "BOTAFOG…
+$ Cidade                        &lt;chr&gt; "SÃO PAULO", "SÃO PAULO", "RIO DE JANEIR…
+$ Estado                        &lt;chr&gt; "SP", "SP", "RJ", "RJ", "RJ", "SP", "SP"…
+$ CEP                           &lt;chr&gt; "045551-065", "045551-065", "22290-160",…
+$ Telefone1                     &lt;chr&gt; "(11) 3509-6600", "(11) 3509-6600", "(21…
+$ Telefone2                     &lt;chr&gt; NA, NA, "(21) 3725-7837", "(21) 3725-783…
+$ Telefone3                     &lt;chr&gt; NA, NA, "(21) 3725-7731", "(21) 3725-773…
+$ Site                          &lt;chr&gt; "www.riobravo.com.br", "www.riobravo.com…
+$ Email                         &lt;chr&gt; "fundosimobiliarios@riobravo.com.br", "f…</code></pre>
+</div>
+</div>
+<p>Filtrando os fundos de investimento imobiliário listados na B3 (não rodar)</p>
+<p>Foram encontrados 1092 fundos de investimento imobiliário na base de dados da CVM.</p>
+<p>Já na base de dados da B3, temos 430 fundos de investimento imobiliário listados.</p>
 </section>
 
 </main>

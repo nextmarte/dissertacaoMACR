@@ -22,6 +22,8 @@ walk(script_files, source)
 
 ## Total de investidores em fundos de investimento imobiliário dentro e fora da B3
 ```{r}
+library(tidyverse)
+
 # Group and summarize the data
 summary_data <- complemento_data %>%
     group_by(Year) %>%
@@ -32,16 +34,20 @@ summary_data <- complemento_data %>%
 print(summary_data)
 
 
-shareholders<-ggplot(summary_data, aes(x = Year, y = Numero_Cotistas_Pessoa_Fisica)) +
+shareholders <- ggplot(summary_data, aes(x = Year, y = Numero_Cotistas_Pessoa_Fisica)) +
     geom_bar(stat = "identity", fill = "steelblue", color = "black") +
     geom_text(aes(label = format(Numero_Cotistas_Pessoa_Fisica, big.mark = ",")), vjust = -0.3, size = 3) +
-    labs(x = "Year", 
-       y = "Total Number of Shareholders", 
-       title = "Total Number of Shareholders Over the Years") +
+    labs(
+        x = "Year",
+        y = "Total Number of Shareholders",
+        title = "Total Number of Shareholders Over the Years"
+    ) +
     theme_minimal() +
-    theme(text = element_text(size = 12),
+    theme(
+        text = element_text(size = 12),
         plot.title = element_text(hjust = 0.5),
-        axis.text.x = element_text(angle = 45, hjust = 1)) +
+        axis.text.x = element_text(angle = 45, hjust = 1)
+    ) +
     scale_y_continuous(labels = scales::comma)
 ```
 
@@ -53,4 +59,9 @@ Fundos listados na B3
 Usar apenas fundos de tijolo: Híbridos, Lages corporativas, Residencial, Shoppings e Logística
 Usar apenas fundos abertos para investidores em geral
 
+
+```{r}
+data_geral_fii  
+
+```
 

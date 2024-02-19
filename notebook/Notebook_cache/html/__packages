@@ -9,3 +9,12 @@ stringr
 forcats
 lubridate
 git2r
+timetk
+zoo
+xts
+PerformanceAnalytics
+gtrendsR
+rio
+TTR
+quantmod
+gganimate
