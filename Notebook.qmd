@@ -11,7 +11,7 @@ title: "Notebook"
 library(tidyverse)
 
 # seta o diretório de trabalho para o diretório do projeto git
-setwd(git2r::workdir(git2r::repository(".")))
+# setwd(git2r::workdir(git2r::repository(".")))
 
 # Get the list of all .R files in the scripts directory
 script_files <- list.files(path = "scripts", pattern = "\\.R$", full.names = TRUE)
@@ -49,6 +49,8 @@ shareholders <- ggplot(summary_data, aes(x = Year, y = Numero_Cotistas_Pessoa_Fi
         axis.text.x = element_text(angle = 45, hjust = 1)
     ) +
     scale_y_continuous(labels = scales::comma)
+
+shareholders
 ```
 
 ## Premissas
@@ -62,7 +64,7 @@ Usar apenas fundos abertos para investidores em geral
 
 ```{r}
 
-setwd(git2r::workdir(git2r::repository(".")))
+# setwd(git2r::workdir(git2r::repository(".")))
 
 fundosListado <- read.csv2("dados/fundosListados.csv", sep = ";", fileEncoding = "UTF-8")
 data_geral_filtrado_b3 <- read.csv2("dados/data_geral_filtrado_b3.csv", sep = ",", fileEncoding = "UTF-8")

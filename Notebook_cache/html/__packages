@@ -8,7 +8,6 @@ dplyr
 stringr
 forcats
 lubridate
-git2r
 timetk
 zoo
 xts
