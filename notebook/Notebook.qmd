@@ -61,7 +61,46 @@ Usar apenas fundos abertos para investidores em geral
 
 
 ```{r}
-data_geral_fii  
+
+fundosListado <- read.csv2("dados/fundosListados.csv", sep = ";", fileEncoding = "UTF-8")
+data_geral_filtrado_b3 <- read.csv2("dados/data_geral_filtrado_b3.csv", sep = ",", fileEncoding = "UTF-8")
+# Contando os fundos unicos na base de dados da CVM
+
+Fundos_cvm_contagem <- n_distinct(data_geral$CNPJ_Fundo)
+codigos_filtro <- n_distinct(data_geral_filtrado_b3$Codigo_ISIN)
+
+# Filter data_geral
+
+# salva o arquivo filtrado em um arquivo csv
+
+# write_csv(data_geral_filtrado, "dados/data_geral_filtrado.csv")
+
+data_geral_filtrado_b3 %>% glimpse()
 
 ```
+
+Filtrando os fundos de investimento imobiliário listados na B3 (não rodar)
+```{r}
+#| echo: false
+#| eval: false
+
+# Create a vector of unique codes
+codigos <- unique(fundosListado$Código)
+
+data_geral_filtrado <- data_geral %>%
+    filter(sapply(Codigo_ISIN, function(x) any(str_detect(x, codigos))))
+```
+
+Foram encontrados `r Fundos_cvm_contagem` fundos de investimento imobiliário na base de dados da CVM. Nessa base de dados, existem infamações sobre os fundos de investimento imobiliário entre 2016 e 2023. A B3 disponibiliza em sua página uma lista de fundos de investimento imobiliário listados, a partir dessa lista foi possível filtrar os fundos de investimento imobiliário listados na B3 dentro da base de dados da CVM através do código ISIN. Assim, na base de dados da B3, temos `r codigos_filtro` fundos de investimento imobiliário listados.
+
+A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3
+
+```{r}
+#| echo: false
+
+
+```
+
+
+ 
 
