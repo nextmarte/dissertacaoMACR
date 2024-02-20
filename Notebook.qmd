@@ -85,7 +85,7 @@ data_geral_filtrado_b3 %>% glimpse()
 
 Filtrando os fundos de investimento imobiliário listados na B3 (não rodar)
 ```{r}
-#| echo: false
+#| echo: true
 #| eval: false
 
 # Create a vector of unique codes

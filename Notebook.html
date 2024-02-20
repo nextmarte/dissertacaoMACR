@@ -224,8 +224,15 @@ $ Email                         &lt;chr&gt; "fundosimobiliarios@riobravo.com.br"
 </div>
 </div>
 <p>Filtrando os fundos de investimento imobiliário listados na B3 (não rodar)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a vector of unique codes</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>codigos <span class="ot">&lt;-</span> <span class="fu">unique</span>(fundosListado<span class="sc">$</span>Código)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>data_geral_filtrado <span class="ot">&lt;-</span> data_geral <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">sapply</span>(Codigo_ISIN, <span class="cf">function</span>(x) <span class="fu">any</span>(<span class="fu">str_detect</span>(x, codigos))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Foram encontrados 1092 fundos de investimento imobiliário na base de dados da CVM. Nessa base de dados, existem infamações sobre os fundos de investimento imobiliário entre 2016 e 2023. A B3 disponibiliza em sua página uma lista de fundos de investimento imobiliário listados, a partir dessa lista foi possível filtrar os fundos de investimento imobiliário listados na B3 dentro da base de dados da CVM através do código ISIN. Assim, na base de dados da B3, temos 430 fundos de investimento imobiliário listados.</p>
-<p>A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3</p>
+<!-- A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3 -->
 </section>
 
 </main>
