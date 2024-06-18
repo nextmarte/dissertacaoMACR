@@ -136,7 +136,7 @@ data_geral_filtrado <- dados_crus %>%
 
 # Save the filtered data to a csv file
 
-# write_csv(data_geral_filtrado, "dados/data_geral_filtrado_b3.csv")
+write_csv(data_geral_filtrado, "dados/data_geral_filtrado_b3.csv")
 
 
 ```
