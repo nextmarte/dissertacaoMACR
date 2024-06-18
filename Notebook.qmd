@@ -20,6 +20,28 @@ script_files <- list.files(path = "scripts", pattern = "\\.R$", full.names = TRU
 walk(script_files, source)
 ```
 
+
+<!-- A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3 -->
+
+```{r}
+
+
+
+# Join the data_geral, data_ativo_passivo and complemento_data tables
+
+dados_crus <- inner_join(data_geral, data_ativo_passivo, by = c("CNPJ_Fundo", "Data_Referencia")) %>% 
+    inner_join(complemento_data, by = c("CNPJ_Fundo", "Data_Referencia"))
+    
+    
+    # %>%
+    # left_join(complemento_data, by = "CNPJ_Fundo")
+
+# View the joined dataframe
+glimpse(dados_crus)
+    
+```
+
+
 ## Total de investidores em fundos de investimento imobiliário dentro e fora da B3
 ```{r}
 library(tidyverse)
@@ -67,11 +89,11 @@ Usar apenas fundos abertos para investidores em geral
 # setwd(git2r::workdir(git2r::repository(".")))
 
 fundosListado <- read.csv2("dados/fundosListados.csv", sep = ";", fileEncoding = "UTF-8")
-data_geral_filtrado_b3 <- read.csv2("dados/data_geral_filtrado_b3.csv", sep = ",", fileEncoding = "UTF-8")
+# data_geral_filtrado_b3 <- read.csv2("dados/data_geral_filtrado_b3.csv", sep = ",", fileEncoding = "UTF-8")
 # Contando os fundos unicos na base de dados da CVM
 
 Fundos_cvm_contagem <- n_distinct(data_geral$CNPJ_Fundo)
-codigos_filtro <- n_distinct(data_geral_filtrado_b3$Codigo_ISIN)
+codigos_filtro <- n_distinct(dados_crus$Codigo_ISIN)
 
 # Filter data_geral
 
@@ -79,41 +101,71 @@ codigos_filtro <- n_distinct(data_geral_filtrado_b3$Codigo_ISIN)
 
 # write_csv(data_geral_filtrado, "dados/data_geral_filtrado.csv")
 
-data_geral_filtrado_b3 %>% glimpse()
+# data_geral_filtrado_b3 %>% glimpse()
 
 ```
 
 Filtrando os fundos de investimento imobiliário listados na B3 (não rodar)
+
+
+
+
+
+## Fundos de investimento imobiliário listados na B3
 ```{r}
 #| echo: true
 #| eval: false
 
-# Create a vector of unique codes
 codigos <- unique(fundosListado$Código)
 
-data_geral_filtrado <- data_geral %>%
-    filter(sapply(Codigo_ISIN, function(x) any(str_detect(x, codigos))))
+# Create a vector of unique ticker codes
+
+dados_crus <- dados_crus %>%
+    filter(!is.na(Codigo_ISIN))
+
+data_geral_filtrado <- dados_crus %>%
+    mutate(codigos_ticker = sapply(Codigo_ISIN, function(x) {
+        detected_code <- codigos[str_detect(x, codigos)]
+        if(length(detected_code) > 0) {
+            return(detected_code)
+        } else {
+            return(NA)
+        }
+    })) %>%
+    filter(!is.na(codigos_ticker))
+
+# Save the filtered data to a csv file
+
+# write_csv(data_geral_filtrado, "dados/data_geral_filtrado_b3.csv")
 
 
 ```
 
 Foram encontrados `r Fundos_cvm_contagem` fundos de investimento imobiliário na base de dados da CVM. Nessa base de dados, existem infamações sobre os fundos de investimento imobiliário entre 2016 e 2023. A B3 disponibiliza em sua página uma lista de fundos de investimento imobiliário listados, a partir dessa lista foi possível filtrar os fundos de investimento imobiliário listados na B3 dentro da base de dados da CVM através do código ISIN. Assim, na base de dados da B3, temos `r codigos_filtro` fundos de investimento imobiliário listados.
 
-<!-- A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3 -->
+A seguir vamos filtrar apenas Fundos que investem em ativos de tijolo. Vamos usar todos os tipos menos NA e "Títulos e Val. Mob."
+
+O Segundo filtro é o de numero de cotistas, vamos usar apenas fundos abertos para investidores em geral e que possuam mais de 50 cotistas.
 
 ```{r}
-#| echo: true
 
-# Join the data_geral_filtrado_b3, data_ativo_passivo and complemento_data tables
+#filtro de segmento de atuação
 
-data_geral_filtrado_b3 <- data_geral_filtrado_b3 %>%
-    left_join(data_ativo_passivo, by = "CNPJ_Fundo") %>%
-    left_join(complemento_data, by = "CNPJ_Fundo")
+data_geral_filtrado <- data_geral_filtrado %>%
+    filter(Segmento_Atuacao != "Títulos e Val. Mob." & !is.na(Segmento_Atuacao))
 
-data_geral_filtrado_b3 %>% glimpse()
-    
+#filtro de numero de cotistas
+
+data_geral_filtrado <- data_geral_filtrado %>%
+    filter(Total_Numero_Cotistas >= 50)
+
+
+# # CNPJ UNICOS
+
+# cnpj_unicos <- n_distinct(dados_crus$CNPJ_Fundo) %>% 
+#     print()
+
 ```
-
 
 
  
