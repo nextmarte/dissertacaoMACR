@@ -93,11 +93,26 @@ codigos <- unique(fundosListado$Código)
 
 data_geral_filtrado <- data_geral %>%
     filter(sapply(Codigo_ISIN, function(x) any(str_detect(x, codigos))))
+
+
 ```
 
 Foram encontrados `r Fundos_cvm_contagem` fundos de investimento imobiliário na base de dados da CVM. Nessa base de dados, existem infamações sobre os fundos de investimento imobiliário entre 2016 e 2023. A B3 disponibiliza em sua página uma lista de fundos de investimento imobiliário listados, a partir dessa lista foi possível filtrar os fundos de investimento imobiliário listados na B3 dentro da base de dados da CVM através do código ISIN. Assim, na base de dados da B3, temos `r codigos_filtro` fundos de investimento imobiliário listados.
 
 <!-- A seguir vamos juntar as tabelas data_geral_filtrado_b3, data_ativo_passivo e complemento_data para obter uma tabela única com todas as informações necessárias para a análise usando a variável CNPJ_Fundo. presente na tabela data_geral_filtrado_b3 -->
+
+```{r}
+#| echo: true
+
+# Join the data_geral_filtrado_b3, data_ativo_passivo and complemento_data tables
+
+data_geral_filtrado_b3 <- data_geral_filtrado_b3 %>%
+    left_join(data_ativo_passivo, by = "CNPJ_Fundo") %>%
+    left_join(complemento_data, by = "CNPJ_Fundo")
+
+data_geral_filtrado_b3 %>% glimpse()
+    
+```
 
 
 
