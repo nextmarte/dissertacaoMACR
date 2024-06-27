@@ -1,0 +1,10 @@
+---
+title: dissertação
+author: Marcus Ramalho
+date: today
+format: docx
+---
+
+Dentre as opções de investimento disponíveis no mercado financeiro brasileiro, os fundos de investimento tem despontado como uma das alternativas mais procuradas pelos investidores do tipo pessoa física. Mesmo em um cenário de instabilidade econômica denotado pela crise de 2016 e durante a pandemia de Covid-19 os números e índices do mercado continuaram a apresentar resultados positivos.
+
+Um dos fatores que contribuiram para isso foi a oscilação negativa na taxa SELIC (Sistema Especial de Liquidação e de Custódia) após a crise política de 2016
